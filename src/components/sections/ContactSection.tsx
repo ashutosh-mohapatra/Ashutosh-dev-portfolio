@@ -4,34 +4,68 @@ import { Mail, Phone, MapPin, Linkedin, Github, Send } from "lucide-react";
 import SectionWrapper from "../SectionWrapper";
 import { useToast } from "@/hooks/use-toast";
 import Robot from "../robots/Robot";
+import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
   const { toast } = useToast();
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // 🛰️ SEND EMAIL USING EMAILJS
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const mailtoLink = `mailto:ashutoshmohapatra215@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(
-      formData.message
-    )}%0A%0AFrom: ${formData.email}`;
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Transmission Failed",
+        description: "All fields required before launch 🚫",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    window.open(mailtoLink);
+    try {
+      setLoading(true);
 
-    setSubmitted(true);
+      await emailjs.send(
+        import.meta.env.VITE_EMAIL_SERVICE,
+        import.meta.env.VITE_EMAIL_TEMPLATE,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          time: new Date().toLocaleString(),
+        },
+        import.meta.env.VITE_EMAIL_PUBLIC
+      );
 
-    toast({
-      title: "Message Transmitted!",
-      description: "Courier robot is delivering your message 🚀",
-    });
+      setSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
 
-    setTimeout(() => setSubmitted(false), 3000);
+      toast({
+        title: "Transmission Successful 🚀",
+        description: "Courier robot delivered your message!",
+      });
+
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      console.error(error);
+
+      toast({
+        title: "Transmission Error",
+        description: "Signal lost in space. Try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,7 +76,7 @@ const ContactSection = () => {
     >
       <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative">
 
-        {/* LEFT INFO PANEL */}
+        {/* LEFT PANEL */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -55,7 +89,7 @@ const ContactSection = () => {
           </div>
 
           <p className="text-muted-foreground font-body">
-            Let’s build intelligent systems together.  
+            Let’s build intelligent systems together.
             Open communication channel and send a transmission.
           </p>
 
@@ -86,7 +120,7 @@ const ContactSection = () => {
           </div>
         </motion.div>
 
-        {/* RIGHT TERMINAL FORM */}
+        {/* FORM */}
         <div className="relative">
           <motion.form
             onSubmit={handleSubmit}
@@ -134,16 +168,17 @@ const ContactSection = () => {
 
             <motion.button
               type="submit"
+              disabled={loading}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className="w-full py-3 rounded-lg font-heading text-sm font-semibold bg-primary text-primary-foreground glow-button flex items-center justify-center gap-2"
             >
               <Send size={14} />
-              Transmit Message
+              {loading ? "Transmitting..." : "Transmit Message"}
             </motion.button>
           </motion.form>
 
-          {/* Courier robot animation */}
+          {/* DELIVERY ROBOT */}
           <motion.div
             className="flex justify-center mt-6"
             animate={submitted ? { x: [0, 120, 120], opacity: [1, 1, 0] } : {}}

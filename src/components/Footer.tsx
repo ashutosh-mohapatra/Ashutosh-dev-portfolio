@@ -6,7 +6,7 @@ const Footer = () => (
       <p className="text-xs text-muted-foreground font-body">
         © {new Date().getFullYear()} Ashutosh Mohapatra. All rights reserved.
       </p>
-      <div className="flex gap-4">
+      <div className="flex gap-4 mr-12">
         <a href="https://www.linkedin.com/in/mohapatra-ashutosh/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
           <Linkedin size={16} />
         </a>
