@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 33% 8%;
+    --foreground: 187 100% 50%;
+
+    --card: 240 30% 12%;
+    --card-foreground: 210 40% 90%;
+
+    --popover: 240 30% 12%;
+    --popover-foreground: 210 40% 90%;
+
+    --primary: 187 100% 50%;
+    --primary-foreground: 240 33% 8%;
+
+    --secondary: 268 100% 58%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 20% 18%;
+    --muted-foreground: 210 20% 60%;
+
+    --accent: 268 100% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 20% 22%;
+    --input: 240 20% 18%;
+    --ring: 187 100% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 240 33% 8%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 240 33% 8%;
+    --sidebar-accent: 268 100% 58%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 20% 22%;
+    --sidebar-ring: 187 100% 50%;
+
+    --neon-blue: 187 100% 50%;
+    --neon-purple: 268 100% 58%;
+    --deep-bg: 240 33% 8%;
+    --glass-bg: 240 30% 12%;
+    --glass-border: 187 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-color: hsl(240 33% 8%);
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .glass-panel {
+    background: hsla(240, 30%, 12%, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(187, 100%, 50%, 0.15);
+  }
+
+  .glass-panel-strong {
+    background: hsla(240, 30%, 12%, 0.8);
+    backdrop-filter: blur(30px);
+    border: 1px solid hsla(187, 100%, 50%, 0.25);
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 15px hsla(187, 100%, 50%, 0.3),
+                0 0 30px hsla(187, 100%, 50%, 0.1),
+                inset 0 0 15px hsla(187, 100%, 50%, 0.05);
+  }
+
+  .neon-glow-purple {
+    box-shadow: 0 0 15px hsla(268, 100%, 58%, 0.3),
+                0 0 30px hsla(268, 100%, 58%, 0.1),
+                inset 0 0 15px hsla(268, 100%, 58%, 0.05);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px hsla(187, 100%, 50%, 0.5),
+                 0 0 20px hsla(187, 100%, 50%, 0.3);
+  }
+
+  .neon-text-purple {
+    text-shadow: 0 0 10px hsla(268, 100%, 58%, 0.5),
+                 0 0 20px hsla(268, 100%, 58%, 0.3);
+  }
+
+  .hologram-lift {
+    @apply transition-all duration-300;
+  }
+  .hologram-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 0 25px hsla(187, 100%, 50%, 0.4),
+                0 0 50px hsla(268, 100%, 58%, 0.15);
+  }
+
+  .glow-button {
+    @apply transition-all duration-300;
+    box-shadow: 0 0 10px hsla(187, 100%, 50%, 0.2);
+  }
+  .glow-button:hover {
+    box-shadow: 0 0 20px hsla(187, 100%, 50%, 0.5),
+                0 0 40px hsla(187, 100%, 50%, 0.2);
+  }
+}
+
+/* Circuit grid background */
+.circuit-bg {
+  background-image:
+    linear-gradient(hsla(187, 100%, 50%, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, hsla(187, 100%, 50%, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Scanline effect */
+.scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    hsla(187, 100%, 50%, 0.02) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(240, 33%, 8%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsla(187, 100%, 50%, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(187, 100%, 50%, 0.5);
+}
